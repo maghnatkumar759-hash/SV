@@ -23,42 +23,11 @@ jobs:
         run: |
           flutter create --org com.sv.editor sv_app
           cd sv_app
-          flutter pub add video_player image_picker path_provider
-
-      - name: Setup SV Manifest
-        run: |
-          cat << 'EOF' > sv_app/android/app/src/main/AndroidManifest.xml
-          <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-              <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
-              <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
-              <application
-                  android:label="SV"
-                  android:icon="@mipmap/ic_launcher"
-                  android:allowBackup="false"
-                  android:fullBackupContent="false">
-                  <activity
-                      android:name=".MainActivity"
-                      android:exported="true"
-                      android:launchMode="singleTop"
-                      android:theme="@style/LaunchTheme"
-                      android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-                      android:hardwareAccelerated="true"
-                      android:windowSoftInputMode="adjustResize">
-                      <meta-data
-                        android:name="io.flutter.embedding.android.NormalTheme"
-                        android:resource="@style/NormalTheme"/>
-                      <intent-filter>
-                          <action android:name="android.intent.action.MAIN"/>
-                          <category android:name="android.intent.category.LAUNCHER"/>
-                      </intent-filter>
-                  </activity>
-              </application>
-          </manifest>
-          EOF
+          flutter pub add video_player image_picker
 
       - name: Write SV Video Editor Code
         run: |
-          cat << 'EOF' > sv_app/lib/main.dart
+          cat > sv_app/lib/main.dart << 'EOF'
           import 'dart:io';
           import 'package:flutter/material.dart';
           import 'package:image_picker/image_picker.dart';
@@ -181,4 +150,3 @@ jobs:
         with:
           name: SV-Release-APK
           path: sv_app/build/app/outputs/flutter-apk/app-release.apk
-          
